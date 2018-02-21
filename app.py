@@ -46,7 +46,7 @@ def verify_fb_token(token_sent):
 
 #chooses a random message to send to the user
 def get_message():
-    sample_responses = ["Well done.", "Yeah, Yeah, Yeah!"]
+    sample_responses = ["Well done!", "Yeah, Yeah!"]
     # return selected item to the user
     return random.choice(sample_responses)
 
