@@ -48,9 +48,3 @@ def registered_plan_in_mongo(facebook_id):
     collection = mongo_collection(client, COLLECTION_REGISTER)
     registered_plan = collection.find_one({'facebook_id': facebook_id})
     return registered_plan
-
-
-register_plan_in_mongo("12341234", 1514764800, 1546300800, float(90), float(75))
-
-print(registered_plan_in_mongo("12341234"))
-
