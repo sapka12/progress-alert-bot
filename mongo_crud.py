@@ -48,3 +48,16 @@ def registered_plan_in_mongo(facebook_id):
     collection = mongo_collection(client, COLLECTION_REGISTER)
     registered_plan = collection.find_one({'facebook_id': facebook_id})
     return registered_plan
+
+
+def save_progress(facebook_id, _timestamp, _value):
+    client = mongo_client()
+    collection = mongo_collection(client, COLLECTION_PROGRESS)
+
+    progress = {
+        "facebook_id": facebook_id,
+        "timestamp": _timestamp,
+        "value": _value
+    }
+
+    collection.save(progress)
