@@ -2,7 +2,10 @@
 import random
 from flask import Flask, request
 from pymessenger.bot import Bot
-import os 
+import os
+from options import answer_message
+
+
 app = Flask(__name__)
 ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
@@ -27,12 +30,8 @@ def receive_message():
                 #Facebook Messenger ID for user so we know where to send response back to
                 recipient_id = message['sender']['id']
                 if message['message'].get('text'):
-                    response_sent_text = get_message()
+                    response_sent_text = answer_message(recipient_id, message['message'].get('text'))
                     send_message(recipient_id, response_sent_text)
-                #if user sends us a GIF, photo,video, or any other non-text item
-                if message['message'].get('attachments'):
-                    response_sent_nontext = get_message()
-                    send_message(recipient_id, response_sent_nontext)
     return "Message Processed"
 
 
@@ -43,12 +42,6 @@ def verify_fb_token(token_sent):
         return request.args.get("hub.challenge")
     return 'Invalid verification token'
 
-
-#chooses a random message to send to the user
-def get_message():
-    sample_responses = ["Well done!", "Yeah, Yeah!"]
-    # return selected item to the user
-    return random.choice(sample_responses)
 
 #uses PyMessenger to send response to user
 def send_message(recipient_id, response):
