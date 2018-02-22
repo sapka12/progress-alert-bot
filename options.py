@@ -2,9 +2,13 @@ import time
 import datetime
 from mongo_crud import register_plan_in_mongo, save_progress
 
+date_format = "%Y-%m-%d"
 
-def help_msg(fb_id):
+
+def help_msg():
     return """
+    version: 0.1.1
+    
     examples:
     - register 100 2018-06-01 90
       (register <actual weight> <plan end date> <planned weight>)
@@ -15,7 +19,7 @@ def help_msg(fb_id):
 
 # 2018-02-28
 def parse_date(d):
-    return round(time.mktime(datetime.datetime.strptime(d, "%Y-%m-%d").timetuple()))
+    return round(time.mktime(datetime.datetime.strptime(d, date_format).timetuple()))
 
 
 def is_float(f):
@@ -44,9 +48,9 @@ def answer_message(fb_id, message):
         if is_float(args[0]):
             return save_actual_weight(fb_id, float(args[0]))
 
-        return help_msg(fb_id)
+        return help_msg()
     except:
-        help_msg(fb_id)
+        help_msg()
 
 
 def actual_timestamp():
@@ -56,13 +60,3 @@ def actual_timestamp():
 def register(facebook_id, actual_value, end_time, end_value):
     register_plan_in_mongo(facebook_id, actual_timestamp(), end_time, float(actual_value), float(end_value))
     return "Your plan has been registered"
-
-
-def now(facebook_id, registered_list):
-    actual_timestamp = time.time()
-    fb_id, start_timestamp, end_timestamp, start_value, end_value = [d for d in registered_list if d[0] == facebook_id][
-        0]
-    period_length = end_timestamp - actual_timestamp
-    point_in_period = actual_timestamp - start_timestamp
-    required_value = ((end_value - start_value) * (point_in_period / period_length))
-    pass
