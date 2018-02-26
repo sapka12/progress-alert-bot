@@ -54,3 +54,10 @@ def save_progress(facebook_id, _timestamp, _value):
     }
 
     collection.save(progress)
+
+
+def get_stat(facebook_id):
+    collection = mongo_collection(COLLECTION_PROGRESS)
+    return collection.find({
+        "facebook_id": facebook_id
+    })

@@ -1,6 +1,7 @@
 import time
 import datetime
 from mongo_crud import register_plan_in_mongo, save_progress, registered_plan_in_mongo
+from chart import stat_pic
 
 date_format = "%Y-%m-%d"
 
