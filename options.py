@@ -5,16 +5,20 @@ from mongo_crud import register_plan_in_mongo, save_progress, registered_plan_in
 date_format = "%Y-%m-%d"
 
 
+def actual_timestamp():
+    return round(time.time())
+
+
 def help_msg():
     return """
-    version: 0.1.2
+    version: 0.1.3
     
     examples:
-    - register 100 2018-06-01 90
+    - Register 100 2018-06-01 90
       (register <actual weight> <plan end date> <planned weight>)
     - 89.9
       (a float input, represents the actual weight)
-    - stat
+    - Stat
       (tell you the actual expected value for the progress)
     """
 
@@ -59,10 +63,15 @@ def stat(fb_id):
     return "your planned weigth for today is: {} kg".format(val_actual)
 
 
+def register(facebook_id, actual_value, end_time, end_value):
+    register_plan_in_mongo(facebook_id, actual_timestamp(), end_time, float(actual_value), float(end_value))
+    return "Your plan has been registered"
+
+
 def answer_message(fb_id, message):
     try:
         args = message.strip().split(" ")
-        if args[0] == "register":
+        if args[0].lower() == "register":
             return [
                 register(
                     facebook_id=fb_id,
@@ -71,11 +80,11 @@ def answer_message(fb_id, message):
                     end_time=parse_date(args[2])
                 )
             ]
-        if args[0] == "stat":
+        if args[0].lower() == "stat":
             return [
                 stat(fb_id)
             ]
-        if is_float(args[0]):
+        if is_float(args[0].replace(",", ".")):
             return [
                 save_actual_weight(fb_id, float(args[0])),
                 stat(fb_id)
@@ -84,12 +93,3 @@ def answer_message(fb_id, message):
         return [help_msg()]
     except:
         return [help_msg()]
-
-
-def actual_timestamp():
-    return round(time.time())
-
-
-def register(facebook_id, actual_value, end_time, end_value):
-    register_plan_in_mongo(facebook_id, actual_timestamp(), end_time, float(actual_value), float(end_value))
-    return "Your plan has been registered"
