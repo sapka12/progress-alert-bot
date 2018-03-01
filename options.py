@@ -1,6 +1,6 @@
 import time
 import datetime
-from mongo_crud import register_plan_in_mongo, save_progress, registered_plan_in_mongo
+from mongo_crud import register_plan_in_mongo, save_progress, registered_plan_in_mongo, planned_values
 from chart import stat_pic
 
 date_format = "%Y-%m-%d"
@@ -44,23 +44,7 @@ def save_actual_weight(fb_id, weight):
 
 def stat(fb_id):
     ts_now = actual_timestamp()
-
-    plan = registered_plan_in_mongo(fb_id)
-
-    ts_start = plan["actual_timestamp"]
-    ts_end = plan["end_timestamp"]
-    val_start = plan["actual_value"]
-    val_end = plan["end_value"]
-
-    val_diff = val_start - val_end
-
-    time_length = ts_end - ts_start
-    time_elapsed = ts_now - ts_start
-
-    epsilon = (val_diff * time_elapsed) / time_length
-
-    val_actual = round(val_start - epsilon, 2)
-
+    val_actual = planned_values(fb_id, ts_now)
     return "your planned weigth for today is: {} kg".format(val_actual)
 
 

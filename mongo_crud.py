@@ -61,3 +61,22 @@ def get_stat(facebook_id):
     return collection.find({
         "facebook_id": facebook_id
     })
+
+
+def planned_values(fb_id, ts):
+    plan = registered_plan_in_mongo(fb_id)
+
+    ts_start = plan["actual_timestamp"]
+    ts_end = plan["end_timestamp"]
+    val_start = plan["actual_value"]
+    val_end = plan["end_value"]
+
+    val_diff = val_start - val_end
+
+    time_length = ts_end - ts_start
+    time_elapsed = ts - ts_start
+
+    epsilon = (val_diff * time_elapsed) / time_length
+
+    return round(val_start - epsilon, 2)
+

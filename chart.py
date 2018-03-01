@@ -1,4 +1,5 @@
 from mongo_crud import get_stat
+from mongo_crud import planned_values
 
 import matplotlib.pyplot as plt
 import datetime
@@ -21,7 +22,10 @@ def stat_pic(facebook_id):
 
     filename = "plot-{}.png".format(uuid.uuid4())
 
+    planned_vals = [planned_values(facebook_id, s["timestamp"]) for s in my_stat]
+
     plt.plot(ts, values)
+    plt.plot(ts, planned_vals)
     plt.savefig(filename)
 
     return filename
