@@ -26,9 +26,9 @@ def receive_message():
                     if message['message'].get('text'):
                         msg = message['message'].get('text')
                         print("message received[{}]: {}".format(recipient_id, msg))
-                        fb_responses = answer_message(recipient_id, msg)
-                        for response_sent_text in fb_responses:
-                            send_message(recipient_id, response_sent_text)
+                        # fb_responses = answer_message(recipient_id, msg)
+                        # for response_sent_text in fb_responses:
+                        #     send_message(recipient_id, response_sent_text)
     return "Message Processed"
 
 
