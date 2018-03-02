@@ -8,12 +8,8 @@ import matplotlib.pyplot as plt
 import datetime
 import uuid
 
-
 def stat_pic(facebook_id):
     my_stat = sorted(list(get_stat(facebook_id)), key=lambda x: x["timestamp"])
-
-    for s in my_stat:
-        print(s)
 
     def readable(_ts):
         return datetime.datetime.fromtimestamp(
@@ -31,4 +27,5 @@ def stat_pic(facebook_id):
     plt.plot(ts, planned_vals)
     plt.savefig(filename)
 
+    print("saved:", filename)
     return filename
