@@ -1,5 +1,5 @@
 import matplotlib
-matplotlib.use('svg')
+matplotlib.use('Agg')
 
 from mongo_crud import get_stat
 from mongo_crud import planned_values
@@ -19,7 +19,7 @@ def stat_pic(facebook_id):
     ts = [readable(s["timestamp"]) for s in my_stat]
     values = [s["value"] for s in my_stat]
 
-    filename = "plot-{}.svg".format(uuid.uuid4())
+    filename = "plot-{}.png".format(uuid.uuid4())
 
     planned_vals = [planned_values(facebook_id, s["timestamp"]) for s in my_stat]
 
