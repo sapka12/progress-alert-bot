@@ -1,3 +1,6 @@
+import matplotlib
+matplotlib.use('Agg')
+
 from mongo_crud import get_stat
 from mongo_crud import planned_values
 
