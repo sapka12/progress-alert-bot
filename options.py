@@ -3,6 +3,8 @@ import datetime
 from mongo_crud import register_plan_in_mongo, save_progress, registered_plan_in_mongo, planned_values
 from chart import stat_pic
 
+IMAGE_PREFIX = "img:"
+
 date_format = "%Y-%m-%d"
 
 
@@ -72,7 +74,8 @@ def answer_message(fb_id, message):
         if is_float(args[0].replace(",", ".")):
             return [
                 save_actual_weight(fb_id, float(args[0])),
-                stat(fb_id)
+                stat(fb_id),
+                IMAGE_PREFIX + stat_pic(fb_id)
             ]
 
         return [help_msg()]

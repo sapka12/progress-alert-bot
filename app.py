@@ -1,7 +1,7 @@
 from flask import Flask, request
 from pymessenger.bot import Bot
 import os
-from options import answer_message
+from options import answer_message, IMAGE_PREFIX
 
 app = Flask(__name__)
 ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
@@ -37,7 +37,11 @@ def verify_fb_token(token_sent):
 
 
 def send_message(recipient_id, response):
-    bot.send_text_message(recipient_id, response)
+    if response.startswith(IMAGE_PREFIX):
+        bot.send_image(recipient_id, response[len(IMAGE_PREFIX):])
+    else:
+        bot.send_text_message(recipient_id, response)
+
     return "success"
 
 
