@@ -23,7 +23,7 @@ def stat_pic(facebook_id):
     ts = [readable(s["timestamp"]) for s in my_stat]
     values = [s["value"] for s in my_stat]
 
-    filename = "plot-{}.jpg".format(uuid.uuid4())
+    filename = "plot-{}.svg".format(uuid.uuid4())
 
     planned_vals = [planned_values(facebook_id, s["timestamp"]) for s in my_stat]
 
@@ -32,5 +32,3 @@ def stat_pic(facebook_id):
     plt.savefig(filename)
 
     return filename
-
-stat_pic("1598282096925445")
