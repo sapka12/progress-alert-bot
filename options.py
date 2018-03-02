@@ -7,14 +7,13 @@ IMAGE_PREFIX = "img:"
 
 date_format = "%Y-%m-%d"
 
-
 def actual_timestamp():
     return round(time.time())
 
 
 def help_msg():
     return """
-    version: 0.1.5.test.5
+    version: 0.1.5.test.6
     
     examples:
     - Register 100 2018-06-01 90
