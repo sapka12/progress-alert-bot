@@ -14,7 +14,7 @@ def actual_timestamp():
 
 def help_msg():
     return """
-    version: 0.1.4
+    version: 0.1.5
     
     examples:
     - Register 100 2018-06-01 90
@@ -74,8 +74,8 @@ def answer_message(fb_id, message):
         if is_float(args[0].replace(",", ".")):
             return [
                 save_actual_weight(fb_id, float(args[0])),
-                stat(fb_id)
-                # IMAGE_PREFIX + stat_pic(fb_id)
+                stat(fb_id),
+                IMAGE_PREFIX + stat_pic(fb_id)
             ]
 
         return [help_msg()]
