@@ -14,7 +14,7 @@ def actual_timestamp():
 
 def help_msg():
     return """
-    version: 0.1.5.test.4
+    version: 0.1.5.test.5
     
     examples:
     - Register 100 2018-06-01 90
@@ -46,7 +46,8 @@ def save_actual_weight(fb_id, weight):
 
 def stat(fb_id):
     ts_now = actual_timestamp()
-    val_actual = planned_values(fb_id, ts_now)
+    plan = registered_plan_in_mongo(fb_id)
+    val_actual = planned_values(fb_id, ts_now, plan)
     return "your planned weigth for today is: {} kg".format(val_actual)
 
 

@@ -2,7 +2,7 @@ import matplotlib
 matplotlib.use('Agg')
 
 from mongo_crud import get_stat
-from mongo_crud import planned_values
+from mongo_crud import planned_values, registered_plan_in_mongo
 
 import matplotlib.pyplot as plt
 import datetime
@@ -21,7 +21,8 @@ def stat_pic(facebook_id):
 
     filename = "plot-{}.png".format(uuid.uuid4())
 
-    planned_vals = [planned_values(facebook_id, s["timestamp"]) for s in my_stat]
+    plan = registered_plan_in_mongo(facebook_id)
+    planned_vals = [planned_values(facebook_id, s["timestamp"], plan) for s in my_stat]
 
     plt.plot(ts, values)
     plt.plot(ts, planned_vals)

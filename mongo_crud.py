@@ -63,8 +63,7 @@ def get_stat(facebook_id):
     })
 
 
-def planned_values(fb_id, ts):
-    plan = registered_plan_in_mongo(fb_id)
+def planned_values(fb_id, ts, plan):
 
     ts_start = plan["actual_timestamp"]
     ts_end = plan["end_timestamp"]
