@@ -1,5 +1,5 @@
 from flask import Flask, request
-from pymessenger.bot import Bot
+from pymessenger2.bot import Bot
 import os
 from options import answer_message, IMAGE_PREFIX
 
