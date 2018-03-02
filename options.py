@@ -14,7 +14,7 @@ def actual_timestamp():
 
 def help_msg():
     return """
-    version: 0.1.3
+    version: 0.1.4
     
     examples:
     - Register 100 2018-06-01 90
