@@ -57,28 +57,29 @@ def register(facebook_id, actual_value, end_time, end_value):
 
 
 def answer_message(fb_id, message):
-    try:
-        args = message.strip().split(" ")
-        if args[0].lower() == "register":
-            return [
-                register(
-                    facebook_id=fb_id,
-                    actual_value=args[1],
-                    end_value=args[3],
-                    end_time=parse_date(args[2])
-                )
-            ]
-        if args[0].lower() == "stat":
-            return [
-                stat(fb_id)
-            ]
-        if is_float(args[0].replace(",", ".")):
-            return [
-                save_actual_weight(fb_id, float(args[0])),
-                stat(fb_id),
-                IMAGE_PREFIX + stat_pic(fb_id)
-            ]
-
-        return [help_msg()]
-    except:
-        return [help_msg()]
+    return ["1", "2"]
+    # try:
+    #     args = message.strip().split(" ")
+    #     if args[0].lower() == "register":
+    #         return [
+    #             register(
+    #                 facebook_id=fb_id,
+    #                 actual_value=args[1],
+    #                 end_value=args[3],
+    #                 end_time=parse_date(args[2])
+    #             )
+    #         ]
+    #     if args[0].lower() == "stat":
+    #         return [
+    #             stat(fb_id)
+    #         ]
+    #     if is_float(args[0].replace(",", ".")):
+    #         return [
+    #             save_actual_weight(fb_id, float(args[0])),
+    #             stat(fb_id),
+    #             IMAGE_PREFIX + stat_pic(fb_id)
+    #         ]
+    #
+    #     return [help_msg()]
+    # except:
+    #     return [help_msg()]
