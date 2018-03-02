@@ -74,8 +74,8 @@ def answer_message(fb_id, message):
         if is_float(args[0].replace(",", ".")):
             return [
                 save_actual_weight(fb_id, float(args[0])),
-                stat(fb_id),
-                IMAGE_PREFIX + stat_pic(fb_id)
+                stat(fb_id)
+                # IMAGE_PREFIX + stat_pic(fb_id)
             ]
 
         return [help_msg()]
