@@ -7,6 +7,7 @@ IMAGE_PREFIX = "img:"
 
 date_format = "%Y-%m-%d"
 
+
 def actual_timestamp():
     return round(time.time())
 
@@ -46,7 +47,7 @@ def save_actual_weight(fb_id, weight):
 def stat(fb_id):
     ts_now = actual_timestamp()
     plan = registered_plan_in_mongo(fb_id)
-    val_actual = planned_values(fb_id, ts_now, plan)
+    val_actual = planned_values(ts_now, plan)
     return "your planned weigth for today is: {} kg".format(val_actual)
 
 
