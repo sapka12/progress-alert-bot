@@ -63,7 +63,7 @@ def get_stat(facebook_id):
     })
 
 
-def planned_values(ts, plan):
+def planned_values(fb_id, ts, plan):
 
     ts_start = plan["actual_timestamp"]
     ts_end = plan["end_timestamp"]

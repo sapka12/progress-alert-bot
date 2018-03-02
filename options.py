@@ -7,7 +7,6 @@ IMAGE_PREFIX = "img:"
 
 date_format = "%Y-%m-%d"
 
-
 def actual_timestamp():
     return round(time.time())
 
@@ -47,7 +46,7 @@ def save_actual_weight(fb_id, weight):
 def stat(fb_id):
     ts_now = actual_timestamp()
     plan = registered_plan_in_mongo(fb_id)
-    val_actual = planned_values(ts_now, plan)
+    val_actual = planned_values(fb_id, ts_now, plan)
     return "your planned weigth for today is: {} kg".format(val_actual)
 
 
@@ -57,29 +56,28 @@ def register(facebook_id, actual_value, end_time, end_value):
 
 
 def answer_message(fb_id, message):
-    return ["1", "2"]
-    # try:
-    #     args = message.strip().split(" ")
-    #     if args[0].lower() == "register":
-    #         return [
-    #             register(
-    #                 facebook_id=fb_id,
-    #                 actual_value=args[1],
-    #                 end_value=args[3],
-    #                 end_time=parse_date(args[2])
-    #             )
-    #         ]
-    #     if args[0].lower() == "stat":
-    #         return [
-    #             stat(fb_id)
-    #         ]
-    #     if is_float(args[0].replace(",", ".")):
-    #         return [
-    #             save_actual_weight(fb_id, float(args[0])),
-    #             stat(fb_id),
-    #             IMAGE_PREFIX + stat_pic(fb_id)
-    #         ]
-    #
-    #     return [help_msg()]
-    # except:
-    #     return [help_msg()]
+    try:
+        args = message.strip().split(" ")
+        if args[0].lower() == "register":
+            return [
+                register(
+                    facebook_id=fb_id,
+                    actual_value=args[1],
+                    end_value=args[3],
+                    end_time=parse_date(args[2])
+                )
+            ]
+        if args[0].lower() == "stat":
+            return [
+                stat(fb_id)
+            ]
+        if is_float(args[0].replace(",", ".")):
+            return [
+                save_actual_weight(fb_id, float(args[0])),
+                stat(fb_id),
+                IMAGE_PREFIX + stat_pic(fb_id)
+            ]
+
+        return [help_msg()]
+    except:
+        return [help_msg()]
