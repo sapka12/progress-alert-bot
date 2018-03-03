@@ -1,12 +1,12 @@
+import os
+
 from flask import Flask, request
 from pymessenger2.bot import Bot
-import os
-from options import answer_message, IMAGE_PREFIX
+from tools.config import Config
+from tools.options import Options
 
 app = Flask(__name__)
-ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
-VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
-bot = Bot(ACCESS_TOKEN)
+bot = Bot(Config.ACCESS_TOKEN)
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -26,14 +26,14 @@ def receive_message():
                     if message['message'].get('text'):
                         msg = message['message'].get('text')
                         print("message received[{}]: {}".format(recipient_id, msg))
-                        # fb_responses = answer_message(recipient_id, msg)
-                        # for response_sent_text in fb_responses:
-                        #     send_message(recipient_id, response_sent_text)
+                        fb_responses = Options.answer_message(recipient_id, msg)
+                        for response_sent_text in fb_responses:
+                            send_message(recipient_id, response_sent_text)
     return "Message Processed"
 
 
 def verify_fb_token(token_sent):
-    if token_sent == VERIFY_TOKEN:
+    if token_sent == Config.VERIFY_TOKEN:
         return request.args.get("hub.challenge")
     return 'Invalid verification token'
 
