@@ -5,6 +5,7 @@ from pymessenger2.bot import Bot
 from tools.config import Config
 from tools.options import Options
 from tools.mongo_crud import MongoCrud
+from tools.chart import Chart
 
 app = Flask(__name__)
 bot = Bot(Config.ACCESS_TOKEN)
@@ -27,7 +28,7 @@ def receive_message():
                     if message['message'].get('text'):
                         msg = message['message'].get('text')
                         print("message received[{}]: {}".format(recipient_id, msg))
-                        fb_responses = Options(MongoCrud()).answer_message(recipient_id, msg)
+                        fb_responses = Options(MongoCrud(), Chart()).answer_message(recipient_id, msg)
                         for response_sent_text in fb_responses:
                             send_message(recipient_id, response_sent_text)
     return "Message Processed"

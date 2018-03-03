@@ -12,7 +12,7 @@ import uuid
 class Chart(MongoCrud):
 
     def stat_pic(self, facebook_id):
-        my_stat = sorted(list(MongoCrud.get_stat(facebook_id)), key=lambda x: x["timestamp"])
+        my_stat = sorted(list(MongoCrud().get_stat(facebook_id)), key=lambda x: x["timestamp"])
 
         def readable(_ts):
             return datetime.datetime.fromtimestamp(
@@ -24,8 +24,8 @@ class Chart(MongoCrud):
 
         filename = "plot-{}.png".format(uuid.uuid4())
 
-        plan = MongoCrud.registered_plan_in_mongo(facebook_id)
-        planned_vals = [MongoCrud.planned_values(facebook_id, s["timestamp"], plan) for s in my_stat]
+        plan = MongoCrud().registered_plan_in_mongo(facebook_id)
+        planned_vals = [MongoCrud().planned_values(facebook_id, s["timestamp"], plan) for s in my_stat]
 
         plt.plot(ts, values)
         plt.plot(ts, planned_vals)

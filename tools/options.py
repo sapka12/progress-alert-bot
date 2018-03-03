@@ -1,12 +1,14 @@
 import datetime
 import time
 
-class Options():
+
+class Options:
     IMAGE_PREFIX = "img:"
     date_format = "%Y-%m-%d"
 
-    def __init__(self, MongoCrud):
+    def __init__(self, MongoCrud, Chart):
         self.MongoCrud = MongoCrud
+        self.Chart = Chart
 
     def answer_message(self, fb_id, message):
         print("Options.answer_message", fb_id, message)
@@ -28,9 +30,8 @@ class Options():
             if self.is_float(args[0].replace(",", ".")):
                 return [
                     self.save_actual_weight(fb_id, float(args[0])),
-                    self.stat(fb_id)
-                    # ,
-                    # self.IMAGE_PREFIX + self.stat_pic(fb_id)
+                    self.stat(fb_id),
+                    self.IMAGE_PREFIX + self.stat_pic(fb_id)
                 ]
 
             return [self.help_msg()]
@@ -65,7 +66,7 @@ class Options():
 
     def register(self, facebook_id, actual_value, end_time, end_value):
         self.MongoCrud.register_plan_in_mongo(facebook_id, self.actual_timestamp(), end_time, float(actual_value),
-                                         float(end_value))
+                                              float(end_value))
         return "Your plan has been registered"
 
     @staticmethod
