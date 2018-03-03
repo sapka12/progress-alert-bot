@@ -1,16 +1,19 @@
 import datetime
 import time
 
-class Options():
-    IMAGE_PREFIX = "img:"
-    date_format = "%Y-%m-%d"
 
-    def __init__(self, MongoCrud):
+class Options:
+
+    def __init__(self, MongoCrud, Chart):
         self.MongoCrud = MongoCrud
+        self.Chart = Chart
+
+        self.IMAGE_PREFIX = "img:"
+        self.date_format = "%Y-%m-%d"
 
     def answer_message(self, fb_id, message):
-        print("Options.answer_message", fb_id, message)
         try:
+            print("Options.answer_message", fb_id, message)
             args = message.strip().split(" ")
             if args[0].lower() == "register":
                 return [
@@ -23,14 +26,14 @@ class Options():
                 ]
             if args[0].lower() == "stat":
                 return [
-                    self.stat(fb_id)
+                    self.stat(fb_id),
+                    self.IMAGE_PREFIX + self.Chart.stat_pic(fb_id)
                 ]
             if self.is_float(args[0].replace(",", ".")):
                 return [
                     self.save_actual_weight(fb_id, float(args[0])),
-                    self.stat(fb_id)
-                    # ,
-                    # self.IMAGE_PREFIX + self.stat_pic(fb_id)
+                    self.stat(fb_id),
+                    self.IMAGE_PREFIX + self.Chart.stat_pic(fb_id)
                 ]
 
             return [self.help_msg()]
@@ -39,7 +42,7 @@ class Options():
 
     def help_msg(self):
         return """
-        version: 0.1.6
+        version: 0.1.7
         
         examples:
         - Register 100 2018-06-01 90
@@ -65,7 +68,7 @@ class Options():
 
     def register(self, facebook_id, actual_value, end_time, end_value):
         self.MongoCrud.register_plan_in_mongo(facebook_id, self.actual_timestamp(), end_time, float(actual_value),
-                                         float(end_value))
+                                              float(end_value))
         return "Your plan has been registered"
 
     @staticmethod
