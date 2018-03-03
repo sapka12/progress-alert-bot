@@ -39,7 +39,7 @@ class Options():
 
     def help_msg(self):
         return """
-        version: 0.1.5.test.8
+        version: 0.1.6
         
         examples:
         - Register 100 2018-06-01 90

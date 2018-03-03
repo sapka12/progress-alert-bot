@@ -22,16 +22,6 @@ class MongoCrud:
         print("save_progress", facebook_id, _timestamp, _value)
 
 
-
-# version: 0.1.5.test.7
-#
-# examples:
-# - Register 100 2018-06-01 90
-#   (register <actual weight> <plan end date> <planned weight>)
-# - 89.9
-#   (a float input, represents the actual weight)
-# - Stat
-#   (tell you the actual expected value for the progress)
 class MyTestCase(unittest.TestCase):
     def test_random_msg(self):
         fb_id = 1234
