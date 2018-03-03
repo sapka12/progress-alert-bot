@@ -26,20 +26,20 @@ class Options:
         if args[0].lower() == "stat":
             return [
                 self.stat(fb_id),
-                self.IMAGE_PREFIX + Chart.stat_pic(fb_id)
+                self.IMAGE_PREFIX + self.Chart.stat_pic(fb_id)
             ]
         if self.is_float(args[0].replace(",", ".")):
             return [
                 self.save_actual_weight(fb_id, float(args[0])),
                 self.stat(fb_id),
-                self.IMAGE_PREFIX + Chart.stat_pic(fb_id)
+                self.IMAGE_PREFIX + self.Chart.stat_pic(fb_id)
             ]
 
         return [self.help_msg()]
 
     def help_msg(self):
         return """
-        version: 0.1.7.test.6
+        version: 0.1.7.test.7
         
         examples:
         - Register 100 2018-06-01 90
