@@ -12,34 +12,37 @@ class Options:
         self.date_format = "%Y-%m-%d"
 
     def answer_message(self, fb_id, message):
-        print("Options.answer_message", fb_id, message)
-        args = message.strip().split(" ")
-        if args[0].lower() == "register":
-            return [
-                self.register(
-                    facebook_id=fb_id,
-                    actual_value=args[1],
-                    end_value=args[3],
-                    end_time=self.parse_date(args[2])
-                )
-            ]
-        if args[0].lower() == "stat":
-            return [
-                self.stat(fb_id),
-                self.IMAGE_PREFIX + self.Chart.stat_pic(fb_id)
-            ]
-        if self.is_float(args[0].replace(",", ".")):
-            return [
-                self.save_actual_weight(fb_id, float(args[0])),
-                self.stat(fb_id),
-                self.IMAGE_PREFIX + self.Chart.stat_pic(fb_id)
-            ]
+        try:
+            print("Options.answer_message", fb_id, message)
+            args = message.strip().split(" ")
+            if args[0].lower() == "register":
+                return [
+                    self.register(
+                        facebook_id=fb_id,
+                        actual_value=args[1],
+                        end_value=args[3],
+                        end_time=self.parse_date(args[2])
+                    )
+                ]
+            if args[0].lower() == "stat":
+                return [
+                    self.stat(fb_id),
+                    self.IMAGE_PREFIX + self.Chart.stat_pic(fb_id)
+                ]
+            if self.is_float(args[0].replace(",", ".")):
+                return [
+                    self.save_actual_weight(fb_id, float(args[0])),
+                    self.stat(fb_id),
+                    self.IMAGE_PREFIX + self.Chart.stat_pic(fb_id)
+                ]
 
-        return [self.help_msg()]
+            return [self.help_msg()]
+        except:
+            return [self.help_msg()]
 
     def help_msg(self):
         return """
-        version: 0.1.7.test.10
+        version: 0.1.7
         
         examples:
         - Register 100 2018-06-01 90
