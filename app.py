@@ -43,8 +43,9 @@ def verify_fb_token(token_sent):
 
 def send_message(opt, recipient_id, response):
     if response.startswith(opt.IMAGE_PREFIX):
-        print("bot.send_image", recipient_id, response[len(opt.IMAGE_PREFIX):])
-        bot.send_image(recipient_id, response[len(opt.IMAGE_PREFIX):])
+        image_path = response[len(opt.IMAGE_PREFIX):]
+        print("bot.send_image", recipient_id, image_path)
+        bot.send_image(recipient_id, image_path)
     else:
         bot.send_text_message(recipient_id, response)
 
