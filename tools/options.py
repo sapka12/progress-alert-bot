@@ -9,6 +9,7 @@ class Options():
         self.MongoCrud = MongoCrud
 
     def answer_message(self, fb_id, message):
+        print("Options.answer_message", fb_id, message)
         try:
             args = message.strip().split(" ")
             if args[0].lower() == "register":

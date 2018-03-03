@@ -26,7 +26,7 @@ def receive_message():
                     if message['message'].get('text'):
                         msg = message['message'].get('text')
                         print("message received[{}]: {}".format(recipient_id, msg))
-                        fb_responses = Options.answer_message(recipient_id, msg)
+                        fb_responses = Options().answer_message(recipient_id, msg)
                         for response_sent_text in fb_responses:
                             send_message(recipient_id, response_sent_text)
     return "Message Processed"
@@ -39,8 +39,8 @@ def verify_fb_token(token_sent):
 
 
 def send_message(recipient_id, response):
-    if response.startswith(Options.IMAGE_PREFIX):
-        bot.send_image(recipient_id, response[len(Options.IMAGE_PREFIX):])
+    if response.startswith(Options().IMAGE_PREFIX):
+        bot.send_image(recipient_id, response[len(Options().IMAGE_PREFIX):])
     else:
         bot.send_text_message(recipient_id, response)
 
