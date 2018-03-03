@@ -12,6 +12,7 @@ import uuid
 class Chart(MongoCrud):
 
     def stat_pic(self, facebook_id):
+        print("Chart.stat_pic", facebook_id)
         my_stat = sorted(list(MongoCrud().get_stat(facebook_id)), key=lambda x: x["timestamp"])
 
         def readable(_ts):

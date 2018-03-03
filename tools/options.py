@@ -13,36 +13,33 @@ class Options:
 
     def answer_message(self, fb_id, message):
         print("Options.answer_message", fb_id, message)
-        try:
-            args = message.strip().split(" ")
-            if args[0].lower() == "register":
-                return [
-                    self.register(
-                        facebook_id=fb_id,
-                        actual_value=args[1],
-                        end_value=args[3],
-                        end_time=self.parse_date(args[2])
-                    )
-                ]
-            if args[0].lower() == "stat":
-                return [
-                    self.stat(fb_id),
-                    self.IMAGE_PREFIX + Chart.stat_pic(fb_id)
-                ]
-            if self.is_float(args[0].replace(",", ".")):
-                return [
-                    self.save_actual_weight(fb_id, float(args[0])),
-                    self.stat(fb_id),
-                    self.IMAGE_PREFIX + Chart.stat_pic(fb_id)
-                ]
+        args = message.strip().split(" ")
+        if args[0].lower() == "register":
+            return [
+                self.register(
+                    facebook_id=fb_id,
+                    actual_value=args[1],
+                    end_value=args[3],
+                    end_time=self.parse_date(args[2])
+                )
+            ]
+        if args[0].lower() == "stat":
+            return [
+                self.stat(fb_id),
+                self.IMAGE_PREFIX + Chart.stat_pic(fb_id)
+            ]
+        if self.is_float(args[0].replace(",", ".")):
+            return [
+                self.save_actual_weight(fb_id, float(args[0])),
+                self.stat(fb_id),
+                self.IMAGE_PREFIX + Chart.stat_pic(fb_id)
+            ]
 
-            return [self.help_msg()]
-        except:
-            return [self.help_msg()]
+        return [self.help_msg()]
 
     def help_msg(self):
         return """
-        version: 0.1.7.test.5
+        version: 0.1.7.test.6
         
         examples:
         - Register 100 2018-06-01 90
