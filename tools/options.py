@@ -3,12 +3,13 @@ import time
 
 
 class Options:
-    IMAGE_PREFIX = "img:"
-    date_format = "%Y-%m-%d"
 
     def __init__(self, MongoCrud, Chart):
         self.MongoCrud = MongoCrud
         self.Chart = Chart
+
+        self.IMAGE_PREFIX = "img:"
+        self.date_format = "%Y-%m-%d"
 
     def answer_message(self, fb_id, message):
         print("Options.answer_message", fb_id, message)
@@ -26,13 +27,13 @@ class Options:
             if args[0].lower() == "stat":
                 return [
                     self.stat(fb_id),
-                    self.IMAGE_PREFIX + self.stat_pic(fb_id)
+                    self.IMAGE_PREFIX + Chart.stat_pic(fb_id)
                 ]
             if self.is_float(args[0].replace(",", ".")):
                 return [
                     self.save_actual_weight(fb_id, float(args[0])),
                     self.stat(fb_id),
-                    self.IMAGE_PREFIX + self.stat_pic(fb_id)
+                    self.IMAGE_PREFIX + Chart.stat_pic(fb_id)
                 ]
 
             return [self.help_msg()]
@@ -41,7 +42,7 @@ class Options:
 
     def help_msg(self):
         return """
-        version: 0.1.7.test.2
+        version: 0.1.7.test.3
         
         examples:
         - Register 100 2018-06-01 90
