@@ -25,7 +25,8 @@ class Options:
                 ]
             if args[0].lower() == "stat":
                 return [
-                    self.stat(fb_id)
+                    self.stat(fb_id),
+                    self.IMAGE_PREFIX + self.stat_pic(fb_id)
                 ]
             if self.is_float(args[0].replace(",", ".")):
                 return [
@@ -40,7 +41,7 @@ class Options:
 
     def help_msg(self):
         return """
-        version: 0.1.7.test.1
+        version: 0.1.7.test.2
         
         examples:
         - Register 100 2018-06-01 90
