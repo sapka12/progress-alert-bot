@@ -4,6 +4,19 @@ import time
 
 class Options:
 
+    def help_msg(self):
+        return """
+        version: 0.1.8
+
+        examples:
+        - Register 100 2018-06-01 90
+          (register <actual weight> <plan end date> <planned weight>)
+        - 89.9
+          (a float input, represents the actual weight)
+        - Stat
+          (tell you the actual expected value for the progress)
+        """
+
     def __init__(self, MongoCrud, Chart):
         self.MongoCrud = MongoCrud
         self.Chart = Chart
@@ -40,19 +53,6 @@ class Options:
         except:
             return [self.help_msg()]
 
-    def help_msg(self):
-        return """
-        version: 0.1.7
-        
-        examples:
-        - Register 100 2018-06-01 90
-          (register <actual weight> <plan end date> <planned weight>)
-        - 89.9
-          (a float input, represents the actual weight)
-        - Stat
-          (tell you the actual expected value for the progress)
-        """
-
     def parse_date(self, d):
         return round(time.mktime(datetime.datetime.strptime(d, self.date_format).timetuple()))
 
@@ -69,6 +69,7 @@ class Options:
     def register(self, facebook_id, actual_value, end_time, end_value):
         self.MongoCrud.register_plan_in_mongo(facebook_id, self.actual_timestamp(), end_time, float(actual_value),
                                               float(end_value))
+        self.save_actual_weight(facebook_id, actual_value)
         return "Your plan has been registered"
 
     @staticmethod
