@@ -37,19 +37,19 @@ class Options:
                         end_time=self.parse_date(args[2])
                     )
                 ]
-            if args[0].lower() == "stat":
+            elif args[0].lower() == "stat":
                 return [
                     self.stat(fb_id),
                     self.IMAGE_PREFIX + self.Chart.stat_pic(fb_id)
                 ]
-            if self.is_float(args[0].replace(",", ".")):
+            elif self.is_float(args[0].replace(",", ".")):
                 return [
                     self.save_actual_weight(fb_id, float(args[0])),
                     self.stat(fb_id),
                     self.IMAGE_PREFIX + self.Chart.stat_pic(fb_id)
                 ]
-
-            return [self.help_msg()]
+            else:
+                return [self.help_msg()]
         except:
             return [self.help_msg()]
 
