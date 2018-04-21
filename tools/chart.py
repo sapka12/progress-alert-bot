@@ -13,7 +13,13 @@ class Chart(MongoCrud):
 
     def stat_pic(self, facebook_id):
         print("Chart.stat_pic", facebook_id)
-        my_stat = sorted(list(MongoCrud().get_stat(facebook_id)), key=lambda x: x["timestamp"])
+
+        plan = MongoCrud().registered_plan_in_mongo(facebook_id)
+
+        plan_start = plan["actual_timestamp"]
+
+        my_stat = [s for s in sorted(list(MongoCrud().get_stat(facebook_id)), key=lambda x: x["timestamp"])
+                   if s["timestamp"] >= plan_start]
 
         def readable(_ts):
             return datetime.datetime.fromtimestamp(
@@ -25,7 +31,7 @@ class Chart(MongoCrud):
 
         filename = "plot-{}.png".format(uuid.uuid4())
 
-        plan = MongoCrud().registered_plan_in_mongo(facebook_id)
+
         planned_vals = [MongoCrud().planned_values(facebook_id, s["timestamp"], plan) for s in my_stat]
 
         plt.plot(ts, values)
