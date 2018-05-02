@@ -27,16 +27,16 @@ class Chart(MongoCrud):
             ).strftime('%Y-%m-%d')
 
         ts = [readable(s["timestamp"]) for s in my_stat]
-        values = [s["value"] for s in my_stat]
+        values = [float(s["value"]) for s in my_stat]
 
         filename = "plot-{}.png".format(uuid.uuid4())
 
 
-        planned_vals = [MongoCrud().planned_values(facebook_id, s["timestamp"], plan) for s in my_stat]
+        planned_vals = [float(MongoCrud().planned_values(facebook_id, s["timestamp"], plan)) for s in my_stat]
 
         print("ts", ts)
         print("values", values)
-        print("values", planned_vals)
+        print("planned_vals", planned_vals)
 
         plt.plot(ts, values)
         plt.plot(ts, planned_vals)
