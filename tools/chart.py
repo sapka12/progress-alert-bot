@@ -34,6 +34,10 @@ class Chart(MongoCrud):
 
         planned_vals = [MongoCrud().planned_values(facebook_id, s["timestamp"], plan) for s in my_stat]
 
+        print("ts", ts)
+        print("values", values)
+        print("values", planned_vals)
+
         plt.plot(ts, values)
         plt.plot(ts, planned_vals)
         plt.savefig(filename)
