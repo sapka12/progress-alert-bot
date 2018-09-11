@@ -6,7 +6,7 @@ class Options:
 
     def help_msg(self):
         return """
-        version: 0.1.8
+        version: 0.1.9
 
         examples:
         - Register 100 2018-06-01 90
@@ -63,8 +63,14 @@ class Options:
     def stat(self, fb_id):
         ts_now = self.actual_timestamp()
         plan = self.MongoCrud.registered_plan_in_mongo(fb_id)
+
+        plan_end_timestamp = datetime.datetime.fromtimestamp(plan["end_timestamp"]).isoformat()[0:10]
+        plan_end_value = plan["end_value"]
+
         val_actual = self.MongoCrud.planned_values(fb_id, ts_now, plan)
-        return "your planned weigth for today is: {} kg".format(val_actual)
+        return "your planned weigth for today is: {} kg\n" \
+               "planned weight is {} for {}"\
+            .format(val_actual, plan_end_value, plan_end_timestamp)
 
     def register(self, facebook_id, actual_value, end_time, end_value):
         self.MongoCrud.register_plan_in_mongo(facebook_id, self.actual_timestamp(), end_time, float(actual_value),
