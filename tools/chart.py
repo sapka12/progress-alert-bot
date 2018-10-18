@@ -3,8 +3,9 @@ import matplotlib
 matplotlib.use('Agg')
 
 from tools.mongo_crud import MongoCrud
-
+from numpy import arange
 import matplotlib.pyplot as plt
+from scipy import stats
 import datetime
 import uuid
 
@@ -31,8 +32,15 @@ class Chart(MongoCrud):
 
         filename = "plot-{}.png".format(uuid.uuid4())
 
-
         planned_vals = [float(MongoCrud().planned_values(facebook_id, s["timestamp"], plan)) for s in my_stat]
+
+        def linreg():
+            _xi = arange(0, len(ts))
+            y = values
+            slope, intercept, r_value, p_value, std_err = stats.linregress(_xi, y)
+            return _xi, slope * _xi + intercept
+
+        xi, avg_line = linreg()
 
         print("ts", ts)
         print("values", values)
@@ -40,6 +48,8 @@ class Chart(MongoCrud):
 
         plt.plot(ts, values)
         plt.plot(ts, planned_vals)
+        plt.plot(xi, avg_line)
+
         plt.savefig(filename)
 
         print("saved:", filename)
