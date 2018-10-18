@@ -38,9 +38,9 @@ class Chart(MongoCrud):
             _xi = arange(0, len(values))
             y = values
             slope, intercept, r_value, p_value, std_err = stats.linregress(_xi, y)
-            return _xi, slope * _xi + intercept
+            return slope * _xi + intercept
 
-        xi, avg_line = linreg()
+        avg_line = linreg()
 
         print("ts", ts)
         print("values", values)
@@ -48,7 +48,7 @@ class Chart(MongoCrud):
 
         plt.plot(ts, values)
         plt.plot(ts, planned_vals)
-        plt.plot(xi, avg_line)
+        plt.plot(ts, avg_line)
 
         plt.savefig(filename)
 
