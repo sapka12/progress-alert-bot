@@ -8,7 +8,7 @@ from requests_toolbelt import MultipartEncoder
 from pymessenger2 import utils
 from pymessenger2.utils import AttrsEncoder
 
-DEFAULT_API_VERSION = 2.6
+DEFAULT_API_VERSION = 2.7
 
 
 class NotificationType(Enum):
