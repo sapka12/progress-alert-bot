@@ -7,11 +7,10 @@ class MongoCrud(Config):
     COLLECTION_PROGRESS = "progress_alert_progress"
 
     def mongo_collection(self, collection_name):
-        uri = "mongodb://{0}:{1}@{2}:{3}/{4}".format(
+        uri = "mongodb+srv://{0}:{1}@{2}:{3}/{4}?retryWrites=true&w=majority".format(
             Config.MONGO_USER,
             Config.MONGO_PWD,
             Config.MONGO_HOST,
-            Config.MONGO_PORT,
             Config.MONGO_DB
         )
         client = MongoClient(uri)
