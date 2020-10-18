@@ -6,7 +6,7 @@ class Options:
 
     def help_msg(self):
         return """
-        version: 0.1.11
+        version: 0.1.12
 
         examples:
         - Register 100 2018-06-01 90
