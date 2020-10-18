@@ -6,7 +6,7 @@ class Options:
 
     def help_msg(self):
         return """
-        version: 0.1.10
+        version: 0.1.11
 
         examples:
         - Register 100 2018-06-01 90
@@ -25,33 +25,33 @@ class Options:
         self.date_format = "%Y-%m-%d"
 
     def answer_message(self, fb_id, message):
-        try:
-            print("Options.answer_message", fb_id, message)
-            args = message.strip().split(" ")
-            if args[0].lower() == "register":
-                return [
-                    self.register(
-                        facebook_id=fb_id,
-                        actual_value=args[1],
-                        end_value=args[3],
-                        end_time=self.parse_date(args[2])
-                    )
-                ]
-            elif args[0].lower() == "stat":
-                return [
-                    self.stat(fb_id),
-                    self.IMAGE_PREFIX + self.Chart.stat_pic(fb_id)
-                ]
-            elif self.is_float(args[0].replace(",", ".")):
-                return [
-                    self.save_actual_weight(fb_id, float(args[0])),
-                    self.stat(fb_id),
-                    self.IMAGE_PREFIX + self.Chart.stat_pic(fb_id)
-                ]
-            else:
-                return [self.help_msg()]
-        except:
+        # try:
+        print("Options.answer_message", fb_id, message)
+        args = message.strip().split(" ")
+        if args[0].lower() == "register":
+            return [
+                self.register(
+                    facebook_id=fb_id,
+                    actual_value=args[1],
+                    end_value=args[3],
+                    end_time=self.parse_date(args[2])
+                )
+            ]
+        elif args[0].lower() == "stat":
+            return [
+                self.stat(fb_id),
+                self.IMAGE_PREFIX + self.Chart.stat_pic(fb_id)
+            ]
+        elif self.is_float(args[0].replace(",", ".")):
+            return [
+                self.save_actual_weight(fb_id, float(args[0])),
+                self.stat(fb_id),
+                self.IMAGE_PREFIX + self.Chart.stat_pic(fb_id)
+            ]
+        else:
             return [self.help_msg()]
+        # except:
+        #     return [self.help_msg()]
 
     def parse_date(self, d):
         return round(time.mktime(datetime.datetime.strptime(d, self.date_format).timetuple()))
