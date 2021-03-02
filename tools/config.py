@@ -10,3 +10,5 @@ class Config:
 
     ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
     VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
+
+    ROLLBAR = os.environ['ROLLBAR_TOKEN']
