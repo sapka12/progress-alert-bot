@@ -23,7 +23,7 @@ class CallButton(object):
     See https://developers.facebook.com/docs/messenger-platform/send-api-reference/postback-button
     """
     title = attr.ib()
-    payload = attr.ib(convert=str)
+    payload = attr.ib(converter=str)
     type = attr.ib(default='phone_number')
 
     def __attrs_post_init__(self):
