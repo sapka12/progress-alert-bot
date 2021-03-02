@@ -9,3 +9,4 @@ six
 attrs
 dnspython
 rollbar
+pymessenger2
